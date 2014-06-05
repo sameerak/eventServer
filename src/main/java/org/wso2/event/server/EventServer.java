@@ -51,7 +51,7 @@ public class EventServer {
                                 for (int i = 0; i < attributeTypes.length; i++) {
                                     StreamDefinition.Type type = attributeTypes[i];
                                     switch (type) {
-                                        case INTEGER:
+                                        case INT:
                                             event[i] = bbuf.getInt();
                                             continue;
                                         case LONG:
