@@ -12,10 +12,10 @@ public class EventClientTest {
 
         StreamDefinition streamDefinition = new StreamDefinition();
         streamDefinition.setStreamId("TestStream");
-        streamDefinition.addAttribute("att1", StreamDefinition.Type.INTEGER);
+        streamDefinition.addAttribute("att1", StreamDefinition.Type.INT);
         streamDefinition.addAttribute("att2", StreamDefinition.Type.FLOAT);
         streamDefinition.addAttribute("att3", StreamDefinition.Type.STRING);
-        streamDefinition.addAttribute("att4", StreamDefinition.Type.INTEGER);
+        streamDefinition.addAttribute("att4", StreamDefinition.Type.INT);
 
         EventClient eventClient = new EventClient("localhost:7612", streamDefinition);
 

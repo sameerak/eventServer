@@ -10,7 +10,7 @@ import java.util.List;
 public class StreamDefinition {
 
     public enum Type {
-        INTEGER, LONG, BOOLEAN, FLOAT, DOUBLE, STRING
+        INT, LONG, BOOLEAN, FLOAT, DOUBLE, STRING
     }
 
     private String streamId;
