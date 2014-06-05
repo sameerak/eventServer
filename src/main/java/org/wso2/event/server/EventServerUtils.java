@@ -18,9 +18,9 @@ public class EventServerUtils {
             StreamDefinition.Attribute attribute = attributeList.get(i);
             switch (attribute.getType()) {
 
-                case INTEGER:
+                case INT:
                     messageSize += 4;
-                    attributeTypes[i]= StreamDefinition.Type.INTEGER;
+                    attributeTypes[i] = StreamDefinition.Type.INT;
                     break;
                 case LONG:
                     messageSize += 8;
