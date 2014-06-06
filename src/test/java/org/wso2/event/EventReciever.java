@@ -23,7 +23,7 @@ public class EventReciever {
             @Override
             public void receive(Object[] event) {
                 count++;
-                if(count%1000==0){
+                if(count%100000==0){
                     long end=System.currentTimeMillis();
                     System.out.println("TP:"+(count*1000.0/(end-start)));
                     start=end;
