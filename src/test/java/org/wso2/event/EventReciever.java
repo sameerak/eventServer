@@ -14,6 +14,11 @@ public class EventReciever {
 
     public static void main(String[] args) throws Exception {
 
+        int port = 7613;
+        if (args.length != 0 && args[0] != null) {
+            port = Integer.parseInt(args[0]);
+        }
+
         StreamDefinition streamDefinition = new StreamDefinition();
         streamDefinition.setStreamId("TestStream");
         streamDefinition.addAttribute("att1", StreamDefinition.Type.INT);
@@ -21,7 +26,7 @@ public class EventReciever {
         streamDefinition.addAttribute("att3", StreamDefinition.Type.STRING);
         streamDefinition.addAttribute("att4", StreamDefinition.Type.INT);
 
-        EventServer eventServer = new EventServer(new EventServerConfig(7613), streamDefinition, new StreamCallback() {
+        EventServer eventServer = new EventServer(new EventServerConfig(port), streamDefinition, new StreamCallback() {
             @Override
             public void receive(Object[] event) {
                 long value =  count.incrementAndGet();
