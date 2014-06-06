@@ -5,6 +5,7 @@ import org.wso2.event.server.EventServerConfig;
 import org.wso2.event.server.StreamCallback;
 import org.wso2.event.server.StreamDefinition;
 
+import java.io.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class EventReciever {
@@ -19,6 +20,8 @@ public class EventReciever {
             port = Integer.parseInt(args[0]);
         }
 
+
+
         StreamDefinition streamDefinition = new StreamDefinition();
         streamDefinition.setStreamId("TestStream");
         streamDefinition.addAttribute("att1", StreamDefinition.Type.INT);
@@ -32,7 +35,15 @@ public class EventReciever {
                 long value =  count.incrementAndGet();
                 if(value%10000000==0){
                     long end=System.currentTimeMillis();
-                    System.out.println("TP:"+(10000000*1000.0/(end-start)));
+                    String tp = "TP:"+(10000000*1000.0/(end-start));
+                    System.out.println(tp);
+                    try {
+                        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("/home/cep/distributedCEP/eventServer/result.txt", true)));
+                        out.println(tp);
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     start=end;
                 }
             }
