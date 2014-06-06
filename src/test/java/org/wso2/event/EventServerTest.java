@@ -1,5 +1,6 @@
 package org.wso2.event;
 
+import org.wso2.event.client.EventClient;
 import org.wso2.event.server.EventServer;
 import org.wso2.event.server.EventServerConfig;
 import org.wso2.event.server.StreamDefinition;
@@ -8,10 +9,12 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.util.EventPrinter;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class EventServerTest {
     private static SiddhiManager siddhiManager;
+    private static volatile long count=0;
 
     public static void main(String[] args) throws Exception {
 
@@ -21,6 +24,7 @@ public class EventServerTest {
         streamDefinition.addAttribute("att2", StreamDefinition.Type.FLOAT);
         streamDefinition.addAttribute("att3", StreamDefinition.Type.STRING);
         streamDefinition.addAttribute("att4", StreamDefinition.Type.INT);
+        final EventClient eventClient = new EventClient("localhost:7613", streamDefinition); //creating a connection to the output receiver
 
         siddhiManager = new SiddhiManager();
         StringBuilder stringBuilder = new StringBuilder();
@@ -36,14 +40,24 @@ public class EventServerTest {
         siddhiManager.addCallback("StockQuote", new org.wso2.siddhi.core.stream.output.StreamCallback() {
             @Override
             public void receive(Event[] events) {
-                EventPrinter.print(events);
+//                EventPrinter.print(events);
+//                count++;
+                //send processed events to the output receiver
+                //get event data from the event array and send them individually to the reciever
+                for(Event event : events){
+                    try {
+                        eventClient.sendEvent(event.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
         EventServer eventServer = new EventServer(new EventServerConfig(7612), streamDefinition, new org.wso2.event.server.StreamCallback() {
             @Override
             public void receive(Object[] event) {
-                System.out.println("test");
+//                System.out.println("test");
                 InputHandler inputHandler = siddhiManager.getInputHandler("TestStream");
                 if(inputHandler != null) {
                     try {
@@ -55,6 +69,7 @@ public class EventServerTest {
                 System.out.println("Could not retrieve stream handler");
                 throw new RuntimeException("Could not retrieve stream handler");
                 }
+
             }
         });
 
