@@ -137,6 +137,24 @@
         </java>
     </target>
 
+    <target name="HashSender" depends="compile-agent">
+        <echo>To configure port use -Drcvs=xxxx, default localhost:7615/localhost:7616/localhost:7617"
+        </echo>
+        <java classname="org.wso2.event.HashSender"
+              classpathref="javac.classpath" fork="true">
+            <arg value="${rcvs}"/>
+        </java>
+    </target>
+
+    <target name="HashSender1" depends="compile-agent">
+        <echo>To configure port use -Drcvs=xxxx, default localhost:7615/localhost:7616/localhost:7617"
+        </echo>
+        <java classname="org.wso2.event.HashSender1"
+              classpathref="javac.classpath" fork="true">
+            <arg value="${rcvs}"/>
+        </java>
+    </target>
+
     <target name="agentPhoneRetailClient" depends="compile-agent">
         <echo>To configure host, port and No. of events use -Dhost=xxxx -Dport=xxxx -Devents=xx
         </echo>
