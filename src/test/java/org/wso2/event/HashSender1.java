@@ -27,7 +27,8 @@ public class HashSender1 {
         streamDefinition.addAttribute("att1", StreamDefinition.Type.INT);
         streamDefinition.addAttribute("att2", StreamDefinition.Type.FLOAT);
         streamDefinition.addAttribute("att3", StreamDefinition.Type.STRING);
-        streamDefinition.addAttribute("att4", StreamDefinition.Type.INT);
+        streamDefinition.addAttribute("att4", StreamDefinition.Type.FLOAT);
+        streamDefinition.addAttribute("att5", StreamDefinition.Type.INT);
 
 
 
@@ -36,6 +37,8 @@ public class HashSender1 {
         for (int i = 0; i < serverLocations.length; i++){
             eventSenders[i] = new EventClient(serverLocations[i], streamDefinition);
         }
+        String servers = "localhost:7716/localhost:7718/localhost:7720";
+        serverLocations = servers.split("/");
 
 
 //        EventClient eventClient = new EventClient("localhost:7612", streamDefinition);
@@ -53,9 +56,12 @@ public class HashSender1 {
         for (int i = 0; i < 1000000000; i++) {
 //            choice = i%serverLocations.length;
 //            eventSenders[choice].sendEvent(new Object[]{random.nextInt(), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextInt()});
-            Object[] event = new Object[]{random.nextInt(), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextInt()};
+            Object[] event = new Object[]{random.nextInt(100), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextFloat(), random.nextInt()};
             hashValue = hashFactory.RSHash(event[0].toString());
             choice = (int) (hashValue%serverLocations.length);
+            if (choice < 0){
+                choice = choice * -1;
+            }
             eventSenders[choice].sendEvent(event);
 //            eventClient.sendEvent(new Object[]{random.nextInt(), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextInt()});
 

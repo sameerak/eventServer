@@ -16,11 +16,12 @@ public class HashSender {
     public static void main(String[] args) throws Exception {
 
         String[] serverLocations = {"localhost:7615", "localhost:7616", "localhost:7617"};
-
         if (args.length != 0 && args[0] != null) {
             String receivers = args[0];
             serverLocations = receivers.split("/");
         }
+        String servers = "localhost:7715/localhost:7717/localhost:7719";
+        serverLocations = servers.split("/");
 
         StreamDefinition streamDefinition = new StreamDefinition();
         streamDefinition.setStreamId("TestStream");
@@ -28,8 +29,6 @@ public class HashSender {
         streamDefinition.addAttribute("att2", StreamDefinition.Type.FLOAT);
         streamDefinition.addAttribute("att3", StreamDefinition.Type.STRING);
         streamDefinition.addAttribute("att4", StreamDefinition.Type.INT);
-
-
 
         EventClient[] eventSenders = new EventClient[serverLocations.length];
 
@@ -53,9 +52,12 @@ public class HashSender {
         for (int i = 0; i < 1000000000; i++) {
 //            choice = i%serverLocations.length;
 //            eventSenders[choice].sendEvent(new Object[]{random.nextInt(), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextInt()});
-            Object[] event = new Object[]{random.nextInt(), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextInt()};
+            Object[] event = new Object[]{random.nextInt(100), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextInt()};
             hashValue = hashFactory.RSHash(event[0].toString());
             choice = (int) (hashValue%serverLocations.length);
+            if (choice < 0){
+                choice = choice * -1;
+            }
             eventSenders[choice].sendEvent(event);
 //            eventClient.sendEvent(new Object[]{random.nextInt(), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextInt()});
 
