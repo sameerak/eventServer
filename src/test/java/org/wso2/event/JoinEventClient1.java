@@ -34,7 +34,7 @@ public class JoinEventClient1 {
 
         for (int i = 0; i < 1000000000; i++) {
             Object[] event = new Object[]{random.nextInt(100), random.nextFloat(), "Abcdefghijklmnop" + random.nextLong(), random.nextFloat(), random.nextInt()};
-            System.out.println("eventINT = " + event[0]);
+//            System.out.println("eventINT = " + event[0]);
             eventClient.sendEvent(event);
         }
     }
