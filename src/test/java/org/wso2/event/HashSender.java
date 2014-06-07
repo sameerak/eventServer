@@ -20,8 +20,6 @@ public class HashSender {
             String receivers = args[0];
             serverLocations = receivers.split("/");
         }
-        String servers = "localhost:7715/localhost:7717/localhost:7719";
-        serverLocations = servers.split("/");
 
         StreamDefinition streamDefinition = new StreamDefinition();
         streamDefinition.setStreamId("TestStream");

@@ -37,8 +37,6 @@ public class HashSender1 {
         for (int i = 0; i < serverLocations.length; i++){
             eventSenders[i] = new EventClient(serverLocations[i], streamDefinition);
         }
-        String servers = "localhost:7716/localhost:7718/localhost:7720";
-        serverLocations = servers.split("/");
 
 
 //        EventClient eventClient = new EventClient("localhost:7612", streamDefinition);
