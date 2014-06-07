@@ -108,6 +108,35 @@
             <arg value="${rcv}"/>
         </java>
     </target>
+	<target name="JoinEventClient" depends="compile-agent">
+        <echo>To configure port and receiver use -Drcv=xx, default receiver = "localhost:7613"
+        </echo>
+        <java classname="org.wso2.event.JoinEventClient"
+              classpathref="javac.classpath" fork="true">
+            <arg value="${rcv}"/>
+        </java>
+    </target>
+
+	<target name="JoinEventClient1" depends="compile-agent">
+        <echo>To configure port and receiver use -Drcv=xx, default receiver = "localhost:7613"
+        </echo>
+        <java classname="org.wso2.event.JoinEventClient1"
+              classpathref="javac.classpath" fork="true">
+            <arg value="${rcv}"/>
+        </java>
+    </target>
+
+    <target name="EventJoinProcessor" depends="compile-agent">
+        <echo>To configure port and receiver use -Dport=xxxx -Dport1=xxxx -Drcv=xx, default port = 7614 port1 = 7615 receiver = "localhost:7613"
+        </echo>
+        <java classname="org.wso2.event.EventJoinProcessor"
+              classpathref="javac.classpath" fork="true">
+            <arg value="${port}"/>
+            <arg value="${port1}"/>
+            <arg value="${rcv}"/>
+        </java>
+    </target>
+
     <target name="agentPhoneRetailClient" depends="compile-agent">
         <echo>To configure host, port and No. of events use -Dhost=xxxx -Dport=xxxx -Devents=xx
         </echo>
